@@ -42,7 +42,7 @@
 ## 阶段 0：地基（5~10 小时）
 
 - [x] 安装 Node.js LTS、Git（Node v20.20.1 LTS / Git 2.53.0，2026-08-21 验证）
-- [ ] 安装 VS Code（未检测到，官网 code.visualstudio.com 下载，安装时勾选"添加到 PATH"）
+- [x] 安装 VS Code（已装在 D:\software\Microsoft VS Code，2026-08-21 验证）
 - [x] 注册 GitHub 账号
 - [x] 本地建 `my-website` 文件夹并 `git init`
 - [ ] 关联 GitHub 远程仓库并 push（在 GitHub 网页上新建一个**空**仓库 my-website，然后执行：
