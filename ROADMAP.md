@@ -47,9 +47,7 @@
 - [x] 安装 VS Code（已装在 D:\software\Microsoft VS Code，2026-08-21 验证）
 - [x] 注册 GitHub 账号
 - [x] 本地建 `my-website` 文件夹并 `git init`
-- [ ] 关联 GitHub 远程仓库并 push（在 GitHub 网页上新建一个**空**仓库 my-website，然后执行：
-      `git remote add origin https://github.com/<你的GitHub用户名>/my-website.git`
-      `git push -u origin main`，首次 push 会弹浏览器让你登录 GitHub）
+- [x] 关联 GitHub 远程仓库并 push（origin = github.com/cy2414693598/my-website，2026-08-21 推送成功；git 已配置仅对 github.com 走本地代理 127.0.0.1:7897，之后推送需保证 Clash Verge 处于运行状态）
 - [x] 提交第一个 commit（ROADMAP.md）
 
 **完成标准**：`node -v`、`git --version` 正常输出；GitHub 仓库里能看到你的 commit。
