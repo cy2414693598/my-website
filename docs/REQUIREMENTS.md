@@ -39,28 +39,36 @@ flowchart LR
     Visitor["访客"]
     Admin["管理员 · 站主"]
 
+    Admin -.->|"is-a 继承"| Visitor
+
     subgraph Blog["个人博客系统"]
         UC1(["浏览主页 · 关于我 · 技能"])
         UC2(["浏览文章列表"])
         UC3(["阅读文章 · 代码高亮"])
-        UC4(["搜索文章"])
+        UC4(["搜索 · 按标签筛选"])
         UC5(["发表评论"])
+        UC9(["订阅 RSS"])
         UC6(["登录后台"])
         UC7(["撰写 Markdown"])
         UC8(["发布 / 编辑 / 删除文章"])
+        UC10(["审核 / 删除评论"])
+        UC11(["查看访问统计"])
     end
 
-    Visitor --> UC1
-    Visitor --> UC2
-    Visitor --> UC3
-    Visitor -.-> UC4
-    Visitor -.-> UC5
-    Admin --> UC6
-    Admin --> UC7
-    Admin --> UC8
+    classDef v2 stroke-dasharray: 5 5
+    class UC4,UC5,UC9,UC10,UC11 v2
+
+    Visitor --> UC1 & UC2 & UC3
+    Visitor --> UC4 & UC5 & UC9
+    Admin --> UC6 & UC7 & UC8
+    Admin --> UC10 & UC11
+
+    UC8 -.->|«include»| UC6
+    UC5 -.->|«extend»| UC3
 ```
 
-> 图例：**实线 = MVP 范围，虚线 = V2（后置）**。管理员同时具备访客的全部用例（管理员也是读者），图中省略不画。
+> 图例：**虚线边框 = V2（后置），实线边框 = MVP**。关系线：`is-a` 表示管理员继承访客全部用例；`«include»` 表示发布文章必然包含登录；`«extend»` 表示评论是阅读的可选扩展。
+> 颗粒度约定：只建模业务目标级用例，界面小交互（如主题切换）与远期设想（AI 功能）不入图。
 
 ## 4. 功能需求
 
