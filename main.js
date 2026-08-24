@@ -17,3 +17,26 @@ if (hour < 6) {
   greeting = '晚上好，我是';
 }
 document.getElementById('greeting').textContent = greeting;
+
+// 3. 深浅色主题切换（借鉴 Josh Comeau 站上的深色模式开关）
+// 思路：<html> 上的 data-theme 属性是总开关，CSS 里 [data-theme="dark"]
+// 会覆盖亮色变量；localStorage 负责跨刷新记住选择
+const themeBtn = document.getElementById('theme-toggle');
+
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.dataset.theme = 'dark';
+  themeBtn.textContent = '☀️';
+}
+
+themeBtn.addEventListener('click', () => {
+  const goingDark = document.documentElement.dataset.theme !== 'dark';
+  if (goingDark) {
+    document.documentElement.dataset.theme = 'dark';
+    themeBtn.textContent = '☀️';
+    localStorage.setItem('theme', 'dark');
+  } else {
+    delete document.documentElement.dataset.theme;
+    themeBtn.textContent = '🌙';
+    localStorage.setItem('theme', 'light');
+  }
+});
