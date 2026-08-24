@@ -55,8 +55,8 @@
 ## 阶段 1：静态主页，先上线（15~25 小时）
 
 - [x] 纯手写 HTML + CSS + JS（不用任何框架）做个人主页：自我介绍、技能清单、联系方式（2026-08-21 完成，index.html / style.css / main.js）
-- [ ] 学/复习重点：HTML 语义化标签、Flex/Grid 布局、媒体查询（手机上不难看）
-- [ ] 部署到 Cloudflare Pages 或 GitHub Pages
+- [x] 学/复习重点：HTML 语义化标签、Flex/Grid 布局、媒体查询（手机上不难看）（语义化/Flex/Grid/媒体查询均已落地，另加学了 CSS 变量主题化、localStorage）
+- [x] 部署到 GitHub Pages（2026-08-24 上线：https://cy2414693598.github.io/my-website/ ）
 - [ ] 可选：买域名（.com 约 60~80 元/年）绑定
 
 **完成标准**：一个 https 链接，手机和电脑都能打开你的主页。
@@ -141,4 +141,6 @@
 
 ### 完成记录
 
-- （待补充）
+- 2026-08-21：阶段 0 完成——环境验证（Node 20 LTS / Git / VS Code）、仓库建立、GitHub 远程关联与首次推送；后端技术栈定为 Java + Spring Boot 3 + MySQL
+- 2026-08-21：阶段 1 主页完成——纯手写 HTML/CSS/JS 三文件分离，语义化结构 + Flex/Grid + 响应式；借鉴 Brittany Chiang 加入深色主题（CSS 变量 + localStorage 记忆）和技能标签化
+- 2026-08-24：GitHub Pages 上线，个人主页第一次跑在互联网上；文案修正为"嵌入式工程师，拓展全栈技术栈"定位
