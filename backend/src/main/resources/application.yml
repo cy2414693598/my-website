@@ -1,0 +1,11 @@
+# application.yml —— Spring Boot 的配置中心
+# 注意格式：两级缩进 + 冒号后必须有空格，这是 YAML 的规矩
+server:
+  port: 8080
+
+spring:
+  application:
+    name: workstation
+
+# 阶段 4 会在这里加 MySQL 连接；阶段 6 加 JWT 密钥——配置全部收口到这个文件，
+# 密钥类配置将来走环境变量注入（.env），不写死在代码里（REQUIREMENTS §5 密钥管理）

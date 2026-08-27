@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  pom.xml —— Maven 项目的"总配置文件"：声明我是谁、依赖什么、怎么构建。
+  Spring Boot 工程的核心是 parent 继承：版本号全部由 spring-boot-starter-parent 统一管理，
+  我们一个版本号都不用写（除 Java 版本），这叫"依赖托管"。
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.5.4</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>com.seeu</groupId>
+  <artifactId>workstation</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>workstation</name>
+  <description>SeeU 的个人成长工作站 - 后端</description>
+
+  <properties>
+    <!-- 决定编译目标和 Spring Boot 的基线检查（SB3 要求 17+，我们用 21） -->
+    <java.version>21</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <!-- Web 起步依赖：一个依赖拉齐内嵌 Tomcat + Spring MVC + Jackson(JSON 序列化) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- 参数校验：@NotBlank / @NotNull 及其触发机制 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+    <!-- 开发期热重启：改代码自动重启应用，仅开发用，打包时自动排除 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- 测试起步依赖：JUnit 5 + MockMvc（本项目的第一批自动化测试用它） -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>
