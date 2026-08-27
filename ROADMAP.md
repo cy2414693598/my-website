@@ -66,7 +66,7 @@
 - [x] 用 Vite 新建 Vue 3 项目，把主页重构成组件（Header / About / Skills / Footer…）（2026-08-24 完成，frontend/ 目录）
 - [x] 加路由：主页 + 文章列表页 + 文章详情页（数据先写死数组或读本地 Markdown 文件；详情页需 Markdown 渲染 + 代码高亮，依据 docs/REQUIREMENTS.md 决策 D1）（hash 路由 + marked + highlight.js，踩坑：rAF 后台挂起 → 换 nextTick）
 - [x] 写 2~3 篇真实文章填充内容（3 篇：STM32 串口接收 / 三天建站实录 / 为什么嵌入式要学 Web）
-- [ ] 重新部署，替换阶段 1 的旧版
+- [x] 重新部署，替换阶段 1 的旧版（2026-08-27 部署源切至 GitHub Actions：push 即自动构建发布；根目录阶段 1 旧文件已移除，历史版本可回溯 git log）
 
 **完成标准**：线上新版主页可访问，文章列表和详情页可正常浏览。
 
@@ -144,3 +144,4 @@
 - 2026-08-21：阶段 0 完成——环境验证（Node 20 LTS / Git / VS Code）、仓库建立、GitHub 远程关联与首次推送；后端技术栈定为 Java + Spring Boot 3 + MySQL
 - 2026-08-21：阶段 1 主页完成——纯手写 HTML/CSS/JS 三文件分离，语义化结构 + Flex/Grid + 响应式；借鉴 Brittany Chiang 加入深色主题（CSS 变量 + localStorage 记忆）和技能标签化
 - 2026-08-24：GitHub Pages 上线，个人主页第一次跑在互联网上；文案修正为"嵌入式工程师，拓展全栈技术栈"定位
+- 2026-08-27：阶段 2 完成——Vue 3 + Vite 组件化重构，hash 路由文章系统（marked 渲染 + highlight.js 高亮），GitHub Actions 自动部署上岗；UI 精修（渐变名字/光晕/标签胶囊/深浅双主题/页脚重构）。踩坑三连：GH Pages 子路径要配 vite base、后台标签页 rAF 挂起导致高亮失效（换 nextTick）、out-in 路由过渡在动画暂停环境白屏（原则：动画不得阻塞内容渲染）
