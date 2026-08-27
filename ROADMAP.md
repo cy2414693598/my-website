@@ -63,9 +63,9 @@
 
 ## 阶段 2：前端工程化重构（30~50 小时）
 
-- [ ] 用 Vite 新建 Vue 3 项目，把主页重构成组件（Header / About / Skills / Footer…）
-- [ ] 加路由：主页 + 文章列表页 + 文章详情页（数据先写死数组或读本地 Markdown 文件；详情页需 Markdown 渲染 + 代码高亮，依据 docs/REQUIREMENTS.md 决策 D1）
-- [ ] 写 2~3 篇真实文章填充内容
+- [x] 用 Vite 新建 Vue 3 项目，把主页重构成组件（Header / About / Skills / Footer…）（2026-08-24 完成，frontend/ 目录）
+- [x] 加路由：主页 + 文章列表页 + 文章详情页（数据先写死数组或读本地 Markdown 文件；详情页需 Markdown 渲染 + 代码高亮，依据 docs/REQUIREMENTS.md 决策 D1）（hash 路由 + marked + highlight.js，踩坑：rAF 后台挂起 → 换 nextTick）
+- [x] 写 2~3 篇真实文章填充内容（3 篇：STM32 串口接收 / 三天建站实录 / 为什么嵌入式要学 Web）
 - [ ] 重新部署，替换阶段 1 的旧版
 
 **完成标准**：线上新版主页可访问，文章列表和详情页可正常浏览。
