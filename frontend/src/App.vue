@@ -15,6 +15,10 @@ import ThemeToggle from './components/ThemeToggle.vue'
   </header>
 
   <main class="page">
+    <!-- 注：这里刻意不加 <transition> 路由过渡。曾试过 out-in 模式，
+         但它会等"旧页离场动画结束"才挂新页——在暂停 CSS 动画的环境
+         （后台标签页/内嵌视图）里离场事件永远不触发，页面直接白屏。
+         原则：动画只能是锦上添花，绝不能阻塞内容渲染 -->
     <router-view />
   </main>
 

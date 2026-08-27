@@ -33,7 +33,10 @@ watch(() => route.params.id, render)
   <article v-if="article" class="article-detail">
     <router-link to="/articles" class="back">← 返回文章列表</router-link>
     <h1>{{ article.title }}</h1>
-    <p class="meta">{{ article.date }} · {{ article.tags.join(' / ') }}</p>
+    <p class="meta">{{ article.date }}</p>
+    <ul class="tags detail-tags">
+      <li v-for="t in article.tags" :key="t">{{ t }}</li>
+    </ul>
 
     <!-- v-html：把 HTML 字符串渲染进页面。
          注意：这里的内容是自己写的 Markdown，没有 XSS 风险；
