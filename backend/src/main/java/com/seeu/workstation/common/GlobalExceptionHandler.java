@@ -1,5 +1,7 @@
 package com.seeu.workstation.common;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,6 +17,9 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    /** 排查现场靠它：吞异常不打日志 = 排查时两眼一抹黑（真实踩坑后的补救） */
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /** 业务异常：按异常自带的状态码返回 */
     @ExceptionHandler(BizException.class)
@@ -44,9 +49,10 @@ public class GlobalExceptionHandler {
                 .body(Result.error(40401, "接口不存在：" + e.getResourcePath()));
     }
 
-    /** 兜底：没预料到的异常一律 500，且不把内部堆栈泄漏给调用方 */
+    /** 兜底：没预料到的异常一律 500，且不把内部堆栈泄漏给调用方——但自己必须留全案底 */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Result<Void>> handleUnknown(Exception e) {
+        log.error("未预期异常：", e);
         return ResponseEntity.internalServerError()
                 .body(Result.error(50000, "服务器开小差了，请稍后再试"));
     }

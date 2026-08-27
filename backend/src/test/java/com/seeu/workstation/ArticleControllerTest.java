@@ -34,7 +34,6 @@ class ArticleControllerTest {
     }
 
     @Test
-    @org.junit.jupiter.api.Disabled("作业：写完 ArticleController 后删掉这行注解，测试转绿即通关")
     void articleCrudFlowShouldWork() throws Exception {
         // ① 创建 → 201 + 返回完整对象（含服务端生成的 id）
         String body = """
@@ -47,7 +46,8 @@ class ArticleControllerTest {
                 .andExpect(jsonPath("$.data.title").value("测试文章"))
                 .andExpect(jsonPath("$.data.id").exists())
                 .andReturn().getResponse().getContentAsString();
-        long id = com.jayway.jsonpath.JsonPath.read(location, "$.data.id");
+        // JSON 数字默认反序列化成 Integer，不能直接当 Long 取——用 Number 中转最稳
+        long id = ((Number) com.jayway.jsonpath.JsonPath.read(location, "$.data.id")).longValue();
 
         // ② 查详情 → 拿得到刚创建的
         mvc.perform(get("/api/articles/" + id))
@@ -72,7 +72,6 @@ class ArticleControllerTest {
     }
 
     @Test
-    @org.junit.jupiter.api.Disabled("作业：同上，写完 Controller 后启用")
     void blankTitleShouldBeRejected() throws Exception {
         mvc.perform(post("/api/articles")
                         .contentType(MediaType.APPLICATION_JSON)

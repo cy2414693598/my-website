@@ -75,7 +75,7 @@
 - [x] 安装 JDK 21（2026-08-27 完成：Temurin 21.0.12.1+1 → D:\dev\jdk-21.0.12.1+1，清华镜像下载；JAVA_HOME 与 PATH 已设为用户级默认；原有 JDK 8 留在 D:\dev\jdk8u492-b09 供老项目用，IDEA 内按项目自选互不干扰；独立 Maven 3.9.16 + 阿里云镜像同步扶正进 PATH）
 - [x] 在 IDEA 里用 Spring Initializr 创建 Spring Boot 3 项目（Java 21，Maven）（2026-08-27 完成：backend/ 目录，手写 pom 等效 Initializr 产物，SB 3.5.4 + 阿里云镜像 1 分钟构建）
 - [ ] 理解经典三层结构：Controller → Service → Mapper（Service/DTO 已就位；Mapper 阶段 4 引入）
-- [ ] 实现文章的增删改查（CRUD）REST 接口，数据先存内存或 JSON 文件（下一阶段换数据库）（Service 五个方法已写好并通过编译；**ArticleController 为站长亲手实现作业**——验收标准即 ArticleControllerTest，移除 @Disabled 跑 mvn test 转绿即完成）
+- [x] 实现文章的增删改查（CRUD）REST 接口，数据先存内存或 JSON 文件（下一阶段换数据库）（2026-08-27 完成：Controller→Service 全通，MockMvc 3 测试全绿，curl 七场景实测全过；踩坑三连入册：兜底异常需专用 404 处理、JSON 数字反序列化 Integer/Long 陷阱、Windows 终端 curl 内联中文会编码损坏须用 @file 发送）
 - [ ] 用 Postman 或 Apifox 调通每一个接口（作业完成后再做）
 - [x] 开工先定 API 统一规范：返回结构与错误码约定、分页约定；密钥/配置走 .env 不进 git；调通的接口留档为回归测试清单（2026-08-27 完成：Result{code,message,data}、PageResult 分页、业务码 0/4xxxx/5xxxx、HTTP 语义 200/201/204/400/404、MockMvc 回归测试）
 - [ ] 学/复习重点：HTTP 方法与状态码、RESTful 设计、注解驱动开发
