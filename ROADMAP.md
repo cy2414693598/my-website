@@ -72,7 +72,7 @@
 
 ## 阶段 3：后端起步（40~60 小时）
 
-- [ ] 安装 JDK 21（2026-08-27 盘点：本机无 JDK；Maven 阿里云镜像已配好，IDEA 已装——IDEA 内 Download JDK → Temurin 21 最省事）
+- [x] 安装 JDK 21（2026-08-27 完成：Temurin 21.0.12.1+1 → D:\dev\jdk-21.0.12.1+1，清华镜像下载；JAVA_HOME 与 PATH 已设为用户级默认；原有 JDK 8 留在 D:\dev\jdk8u492-b09 供老项目用，IDEA 内按项目自选互不干扰；独立 Maven 3.9.16 + 阿里云镜像同步扶正进 PATH）
 - [ ] 在 IDEA 里用 Spring Initializr 创建 Spring Boot 3 项目（Java 21，Maven）
 - [ ] 理解经典三层结构：Controller → Service → Mapper
 - [ ] 实现文章的增删改查（CRUD）REST 接口，数据先存内存或 JSON 文件（下一阶段换数据库）
