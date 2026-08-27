@@ -1,16 +1,22 @@
 package com.seeu.workstation.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.time.LocalDateTime;
 
 /**
  * 文章实体 —— 字段与 docs/REQUIREMENTS.md §10 ER 图一一对应。
- * 阶段 3 数据存内存（Service 里的 Map）；阶段 4 这个类直接映射成 MySQL 的 article 表。
+ * 阶段 4 起：通过 MyBatis-Plus 映射到 MySQL 的 article 表（schema.sql）。
  *
- * 为什么不用 record：实体有"生命周期中被修改"的需求（更新时改字段），
- * record 是不可变的，适合 DTO 不适合实体——两种形态各有正当用途。
+ * 映射规则：驼峰字段 ↔ 下划线列（contentMd ↔ content_md）自动转换；
+ * @TableId 声明主键且由数据库自增填充——insert 后实体里就有 id 了。
  */
+@TableName("article")
 public class Article {
 
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /** D10 多用户预留：阶段 6 之前恒为 null */
     private Long authorId;

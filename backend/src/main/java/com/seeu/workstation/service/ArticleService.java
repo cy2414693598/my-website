@@ -1,28 +1,25 @@
 package com.seeu.workstation.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.seeu.workstation.common.BizException;
 import com.seeu.workstation.common.PageResult;
+import com.seeu.workstation.mapper.ArticleMapper;
 import com.seeu.workstation.model.Article;
 import com.seeu.workstation.model.ArticleCreateRequest;
 import com.seeu.workstation.model.ArticleUpdateRequest;
+import jakarta.annotation.PostConstruct;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 文章业务层 —— Controller 只管"翻译 HTTP"，业务规则全部在 Service。
  *
- * 阶段 3 的存储方案：ConcurrentHashMap（内存）。
- *   线程安全：多个请求并发读写同一张 Map 不炸（Web 是多线程的）
- *   AtomicLong：无并发冲突的自增 id 发号器
- * 阶段 4 把 store 换成 MyBatis-Plus 的 Mapper，方法签名不变——
- * 这就是分层的意义：换实现不换接口。
+ * 阶段 4：存储从 ConcurrentHashMap 换成 MySQL（经 ArticleMapper）。
+ * 注意 Controller 一个字都没改——方法签名不变，实现随便换，
+ * 这就是分层的第一笔红利兑现。
  */
 @Service
 public class ArticleService {
@@ -30,12 +27,22 @@ public class ArticleService {
     /** 业务错误码约定：40404 = 文章不存在（404 + 04 序号），前端凭 code 做精确提示 */
     private static final int CODE_NOT_FOUND = 40404;
 
-    private final Map<Long, Article> store = new ConcurrentHashMap<>();
-    private final AtomicLong idGen = new AtomicLong(0);
+    private final ArticleMapper articleMapper;
 
-    public ArticleService() {
-        // 种子数据：和前端 frontend/src/data/articles.js 的三篇一致，
-        // 阶段 5 前端改为调这些接口时，看到的内容就是熟的
+    public ArticleService(ArticleMapper articleMapper) {
+        this.articleMapper = articleMapper;
+    }
+
+    /**
+     * 首次启动播种三篇文章。幂等：只在空表时执行——
+     * 重启不会重复插入（这正是"数据持久化"的意义所在）。
+     */
+    @PostConstruct
+    public void seedIfEmpty() {
+        Long count = articleMapper.selectCount(null);
+        if (count != null && count > 0) {
+            return;
+        }
         create(new ArticleCreateRequest(
                 "STM32 串口接收的三种姿势：轮询、中断、DMA + 空闲中断",
                 "## 一、轮询\n\n```c\nwhile (!(USART1->SR & USART_SR_RXNE));\n```\n\n（完整内容见前端文章，此处为接口演示正文）",
@@ -53,21 +60,16 @@ public class ArticleService {
                 "全栈,思考"));
     }
 
-    /** 分页列表：按 id 倒序（新的在前），跳过前 (page-1)*size 条 */
+    /** 分页列表：新的在前。selectPage 需要分页插件（见 MybatisPlusConfig） */
     public PageResult<Article> list(int page, int size) {
-        List<Article> all = store.values().stream()
-                .sorted(Comparator.comparing(Article::getId).reversed())
-                .toList();
-        int from = (page - 1) * size;
-        List<Article> pageList = all.stream()
-                .skip(from)
-                .limit(size)
-                .toList();
-        return new PageResult<>(pageList, all.size(), page, size);
+        Page<Article> result = articleMapper.selectPage(
+                new Page<>(page, size),
+                new LambdaQueryWrapper<Article>().orderByDesc(Article::getId));
+        return new PageResult<>(result.getRecords(), result.getTotal(), page, size);
     }
 
     public Article getById(Long id) {
-        Article a = store.get(id);
+        Article a = articleMapper.selectById(id);
         if (a == null) {
             throw new BizException(CODE_NOT_FOUND, "文章不存在，id=" + id, HttpStatus.NOT_FOUND);
         }
@@ -76,7 +78,6 @@ public class ArticleService {
 
     public Article create(ArticleCreateRequest req) {
         Article a = new Article();
-        a.setId(idGen.incrementAndGet());
         a.setTitle(req.title());
         a.setSlug(slugify(req.title()));
         a.setContentMd(req.contentMd());
@@ -86,7 +87,8 @@ public class ArticleService {
         a.setStatus(1);       // 默认已发布：草稿流程在阶段 6 后台上线后启用
         a.setCreatedAt(LocalDateTime.now());
         a.setUpdatedAt(LocalDateTime.now());
-        store.put(a.getId(), a);
+        // insert 后主键自动回填进实体（@TableId(IdType.AUTO) 的功劳），直接返回即可
+        articleMapper.insert(a);
         return a;
     }
 
@@ -98,12 +100,13 @@ public class ArticleService {
         if (req.summary() != null) a.setSummary(req.summary());
         if (req.tags() != null) a.setTags(req.tags());
         a.setUpdatedAt(LocalDateTime.now());
+        articleMapper.updateById(a);
         return a;
     }
 
     public void delete(Long id) {
         getById(id); // 先确认存在，不存在同样 404
-        store.remove(id);
+        articleMapper.deleteById(id);
     }
 
     /** 标题 → URL 友好的 slug：中文原样保留，空白转连字符 */

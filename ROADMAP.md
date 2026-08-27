@@ -84,10 +84,10 @@
 
 ## 阶段 4：数据库（25~40 小时）
 
-- [ ] 安装 MySQL 8 社区版，用已有的 Navicat 连接
-- [ ] 设计表结构：`article`、`user`、`drill`、`comment`（ER 图草案见 REQUIREMENTS §10，建表前定稿；预留 author_id / user_id 字段——D10 多用户演进的缝，成本一行字段）
-- [ ] 引入 MyBatis-Plus，把阶段 3 的数据逻辑迁移到 MySQL
-- [ ] 学/复习重点：基本 SQL、数据建模、MyBatis-Plus 的 CRUD 写法
+- [x] 安装 MySQL 8 社区版，用已有的 Navicat 连接（2026-08-27 完成：8.0.29 ZIP 版 → D:\dev\mysql-8.0.29-winx64，root 空密码仅监听本机；官方 8.0.44 因代理不稳放弃，华为云镜像直连）
+- [x] 设计表结构：`article`、`user`、`drill`、`comment`（2026-08-27 完成：ER 图 §10 定稿为 schema.sql 入库并执行，四表建成，字段注释标注决策来源）
+- [x] 引入 MyBatis-Plus，把阶段 3 的数据逻辑迁移到 MySQL（2026-08-27 完成：Service 换 Mapper 实现方法签名不变——分层红利兑现；踩坑入册：selectPage 必须注册分页插件否则假分页）
+- [ ] 学/复习重点：基本 SQL、数据建模、MyBatis-Plus 的 CRUD 写法（SQL 日志已开启，读日志学 SQL）
 
 **完成标准**：重启后端服务，文章数据不丢。
 
@@ -152,3 +152,5 @@
 - 2026-08-21：阶段 1 主页完成——纯手写 HTML/CSS/JS 三文件分离，语义化结构 + Flex/Grid + 响应式；借鉴 Brittany Chiang 加入深色主题（CSS 变量 + localStorage 记忆）和技能标签化
 - 2026-08-24：GitHub Pages 上线，个人主页第一次跑在互联网上；文案修正为"嵌入式工程师，拓展全栈技术栈"定位
 - 2026-08-27：阶段 2 完成——Vue 3 + Vite 组件化重构，hash 路由文章系统（marked 渲染 + highlight.js 高亮），GitHub Actions 自动部署上岗；UI 精修（渐变名字/光晕/标签胶囊/深浅双主题/页脚重构）。踩坑三连：GH Pages 子路径要配 vite base、后台标签页 rAF 挂起导致高亮失效（换 nextTick）、out-in 路由过渡在动画暂停环境白屏（原则：动画不得阻塞内容渲染）
+- 2026-08-27：阶段 3 完成——Spring Boot 3.5 后端上线（文章五接口 + 统一返回规范 + 全局异常处理 + MockMvc 3 测试全绿 + curl 七场景实测）；JDK 21 双版本共存（D:\dev）。踩坑：兜底异常吞 404 成 500、JSON 数字反序列化 Integer/Long 陷阱、Windows 终端 curl 内联中文编码损坏（@file 方式解决）、兜底异常必须打日志
+- 2026-08-27：阶段 4 完成——MySQL 8.0.29 ZIP 版落地 D:\dev（root 空密码、仅本机），四表按 ER 图定稿为 schema.sql；MyBatis-Plus 迁移完成，Controller 零改动兑现分层承诺，重启持久化验证通过。踩坑：selectPage 必须显式注册分页插件，否则"查出全部再截断"假分页

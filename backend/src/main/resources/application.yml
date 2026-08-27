@@ -6,6 +6,14 @@ server:
 spring:
   application:
     name: workstation
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/workstation?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: ""        # 本地开发库为空密码（--initialize-insecure）；上生产必须改，且走环境变量注入
 
-# 阶段 4 会在这里加 MySQL 连接；阶段 6 加 JWT 密钥——配置全部收口到这个文件，
+mybatis-plus:
+  configuration:
+    # 开发期把 SQL 打到控制台——学 ORM 阶段最好的老师就是看它生成的 SQL
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 # 密钥类配置将来走环境变量注入（.env），不写死在代码里（REQUIREMENTS §5 密钥管理）
