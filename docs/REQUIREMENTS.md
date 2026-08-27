@@ -184,3 +184,57 @@ flowchart TD
 ```
 
 > 这条管线对三种训练完全一致，差异只存在于"获取"和"LLM 加工"两站的 prompt 模板——这就是 D8 说"同一引擎"的图形化证明。
+
+## 10. ER 图（数据模型 v0 草案，阶段 4 建表前定稿）
+
+```mermaid
+erDiagram
+    USER ||--o{ ARTICLE : "撰写 author_id"
+    USER ||--o{ DRILL : "练习 user_id"
+    USER ||--o{ COMMENT : "以昵称发表"
+    ARTICLE ||--o{ COMMENT : "被评论"
+
+    USER {
+        bigint id PK
+        string username
+        string password_hash "bcrypt"
+        string role "D4：MVP 用角色字段，演进留缝"
+        datetime created_at
+    }
+    ARTICLE {
+        bigint id PK
+        bigint author_id FK "D10 多用户预留"
+        string title
+        string slug "URL 标识"
+        text content_md "Markdown 正文"
+        string summary
+        string tags "逗号分隔，V2 升级标签表"
+        tinyint visibility "D9：0 公开 / 1 私密"
+        tinyint status "0 草稿 / 1 已发布 / 2 下架"
+        datetime created_at
+        datetime updated_at
+    }
+    DRILL {
+        bigint id PK
+        bigint user_id FK "D10 多用户预留"
+        tinyint type "D8：speech / interview / thinking"
+        date drill_date
+        string title "题面"
+        text material "素材或题目"
+        text answer "站长作答"
+        text feedback "AI 点评"
+        tinyint score
+        date next_review "间隔重复队列：1/3/7/21 天"
+    }
+    COMMENT {
+        bigint id PK
+        bigint article_id FK
+        string nickname "D6：访客昵称必填"
+        string email "D6：选填不公开"
+        text content
+        tinyint status "D6：0 待审 / 1 通过"
+        datetime created_at
+    }
+```
+
+> 阅读方式：每个字段的注释都标注了来源决策（D 编号）——**这张表是十条决策的沉淀**。v0 草案服务于阶段 3 的 API 字段设计；阶段 4 建表前结合实现中发现的细节定稿（比如索引、字段长度、是否拆标签表）。

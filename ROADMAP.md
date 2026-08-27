@@ -84,7 +84,7 @@
 ## 阶段 4：数据库（25~40 小时）
 
 - [ ] 安装 MySQL 8 社区版，用已有的 Navicat 连接
-- [ ] 设计表结构：`article`、`user`（提前为阶段 6 留好；预留 author_id / user_id 字段——D10 多用户演进的缝，成本一行字段）
+- [ ] 设计表结构：`article`、`user`、`drill`、`comment`（ER 图草案见 REQUIREMENTS §10，建表前定稿；预留 author_id / user_id 字段——D10 多用户演进的缝，成本一行字段）
 - [ ] 引入 MyBatis-Plus，把阶段 3 的数据逻辑迁移到 MySQL
 - [ ] 学/复习重点：基本 SQL、数据建模、MyBatis-Plus 的 CRUD 写法
 
