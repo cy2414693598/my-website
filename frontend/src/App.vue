@@ -23,7 +23,13 @@ import ThemeToggle from './components/ThemeToggle.vue'
   </main>
 
   <footer class="site-footer">
-    <!-- {{ }} 插值：Vue 把 JS 表达式的结果渲染进 HTML -->
-    <p>© {{ new Date().getFullYear() }} SeeU · Vue 3 + Vite 构建 · GitHub Pages 托管</p>
+    <!-- 主行：版权 + 本站开源（能力证明型网站的关键链接） -->
+    <p class="footer-copy">
+      © {{ new Date().getFullYear() }} SeeU ·
+      <a href="https://github.com/cy2414693598/my-website" target="_blank" rel="noopener">本站开源</a>
+    </p>
+    <!-- 次行：弱化小字。技术署名（colophon）放配角位；
+         阶段 7 若用国内服务器，ICP 备案号按法规要加在这一行 -->
+    <p class="footer-meta">嵌入式工程师的全栈学习笔记 · Powered by Vue 3 &amp; GitHub Pages</p>
   </footer>
 </template>

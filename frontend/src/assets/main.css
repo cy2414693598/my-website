@@ -423,13 +423,22 @@ a:hover {
   margin: 16px 0;
 }
 
-/* 10. 页脚 */
+/* 10. 页脚：主行管版权与链接，次行小字管技术署名 */
 .site-footer {
   border-top: 1px solid var(--border);
-  padding: 24px;
+  padding: 28px 24px;
   text-align: center;
   color: var(--text-muted);
   font-size: 0.9rem;
+}
+
+.footer-copy {
+  margin-bottom: 4px;
+}
+
+.footer-meta {
+  font-size: 0.8rem;
+  opacity: 0.85;
 }
 
 /* 11. 响应式 */
